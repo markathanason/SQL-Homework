@@ -66,8 +66,6 @@ FROM departments RIGHT JOIN dept_manager
 	ON departments.dept_no = dept_manager.dept_no
 		LEFT JOIN employees 
 			ON employees.emp_no = dept_manager.emp_no
-		LEFT JOIN titles
-			ON titles.emp_no = dept_manager.emp_no
 ;
 
 --List the department of each employee with the following information: 
