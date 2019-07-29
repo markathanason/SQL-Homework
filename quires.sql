@@ -55,18 +55,20 @@ FROM employees INNER JOIN salaries
 --List employees who were hired in 1986.
 
 CREATE VIEW hired_in_1986 AS
-SELECT first_name, last_name, hire_date FROM employees WHERE hire_date >=('1987/1/1') AND hire_date <('1987/12/31');
+SELECT first_name, last_name, hire_date FROM employees WHERE hire_date >=('1987/1/1') AND hire_date <=('1987/12/31');
 
 --List the manager of each department with the following information: 
 --department number, department name, the manager's employee number, last name, first name, and start and end employment dates.
 
 CREATE VIEW manager_department_names AS
-SELECT DISTINCT departments.dept_no, departments.dept_name, employees.emp_no, employees.last_name, employees.first_name, dept_manager.from_date, dept_manager.to_date
-FROM departments RIGHT JOIN dept_manager
-	ON departments.dept_no = dept_manager.dept_no
-		LEFT JOIN employees 
-			ON employees.emp_no = dept_manager.emp_no
-;
+SELECT DISTINCT departments.dept_no, departments.dept_name, employees.emp_no, 
+employees.last_name, employees.first_name, dept_manager.from_date, dept_manager.to_date
+FROM departments 
+	RIGHT JOIN dept_manager
+		ON departments.dept_no = dept_manager.dept_no
+	LEFT JOIN employees 
+		ON employees.emp_no = dept_manager.emp_no
+		
 
 --List the department of each employee with the following information: 
 --employee number, last name, first name, and department name.
@@ -115,6 +117,6 @@ WHERE dept_name = 'Sales' OR dept_name = 'Development'
 --employee last names, i.e., how many employees share each last name.
 
 CREATE VIEW last_name_count AS
-SELECT last_name, count(last_name) FROM employees
+SELECT DISTINCT last_name, count(last_name) FROM employees
 GROUP BY last_name ORDER BY count(last_name) desc
 ;
